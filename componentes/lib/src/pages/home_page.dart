@@ -1,5 +1,8 @@
-import 'package:componentes/src/providers/menu_provider.dart';
 import 'package:flutter/material.dart';
+
+import 'package:componentes/src/providers/menu_provider.dart';
+import 'package:componentes/src/utils/icono_string_util.dart';
+import 'package:componentes/src/pages/alert_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -10,7 +13,7 @@ class HomePage extends StatelessWidget {
       ),
       body: _lista(),
           );
-        }
+  }
       
   Widget _lista() {
 
@@ -19,7 +22,7 @@ class HomePage extends StatelessWidget {
       initialData: [],
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
           return ListView(
-            children: _listaItems(snapshot.data),
+            children: _listaItems(snapshot.data ,context),
           );
       },
     );
@@ -30,14 +33,23 @@ class HomePage extends StatelessWidget {
     // );
   }
 
-  List<Widget> _listaItems(List<dynamic> data) {
+  List<Widget> _listaItems(List<dynamic> data, BuildContext context) {
     final lista = List<Widget>();
     data.forEach((d){
       final tmpW = ListTile(
         title: Text(d['texto']),
-        trailing: Icon(Icons.arrow_right, color: Colors.blue,),
-        leading: Icon(Icons.keyboard_capslock, color: Colors.blue,),
-        onTap: (){},
+        trailing: Icon(Icons.arrow_forward_ios, color: Colors.blue,),
+        leading: getIcon(d['icon']),
+        onTap: (){
+
+          Navigator.pushNamed(context, d['ruta']);
+          // final route = MaterialPageRoute(
+          //   builder: (context) => AlertPage()
+            
+          // );
+          // Navigator.push(context, route);
+
+        },
       );
 
       lista..add(tmpW)
